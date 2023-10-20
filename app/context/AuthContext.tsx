@@ -37,12 +37,12 @@ export const AuthProvider = ({ children }: UserContextProviderType) => {
     // console.log(userData)
 
     try {
-   
 
-        AsyncStorage.setItem('userToken',"gaga");
 
-        setUser(user);
-        setIsLoading(false);
+      AsyncStorage.setItem('userToken', "gaga");
+
+      setUser(user);
+      setIsLoading(false);
 
     } catch (error) {
       console.error('Login failed: ', error);
@@ -104,5 +104,5 @@ export const AuthProvider = ({ children }: UserContextProviderType) => {
   // }
 
 
-  return <AuthContext.Provider value={{ user, setUser, login,  isLoading, userToken, setUserToken }}>{children}</AuthContext.Provider>;
+  return <AuthContext.Provider value={{ user, setUser, login, isLoading, userToken, setUserToken }}>{children}</AuthContext.Provider>;
 };
