@@ -1,53 +1,48 @@
-import React, { createContext, useState, useEffect, useReducer } from "react";
-import AsyncStorage from "@react-native-async-storage/async-storage"
+import React, { createContext, useState, useEffect, useReducer } from 'react'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
+interface AuthUser {
+  userName: string
+  email: string
+}
 
-type AuthUser = {
-  userName: string;
-  email: string;
-};
-
-export type UserContextType = {
-  user: AuthUser | null;
-  setUser: React.Dispatch<React.SetStateAction<AuthUser | null>>;
+export interface UserContextType {
+  user: AuthUser | null
+  setUser: React.Dispatch<React.SetStateAction<AuthUser | null>>
   login: ({ email, password }) => void
   isLoading: boolean
   userToken: any
   setUserToken: React.Dispatch<React.SetStateAction<string | null>>
-};
+}
 
-type UserContextProviderType = {
-  children: React.ReactNode;
-};
+interface UserContextProviderType {
+  children: React.ReactNode
+}
 
-export const AuthContext = createContext({} as UserContextType);
+export const AuthContext = createContext({} as UserContextType)
 
 export const AuthProvider = ({ children }: UserContextProviderType) => {
   const [isLoading, setIsLoading] = useState(false)
-  const [userToken, setUserToken] = useState("hh")
-  const [user, setUser] = useState<AuthUser | null>(null);
+  const [userToken, setUserToken] = useState('hh')
+  const [user, setUser] = useState<AuthUser | null>(null)
 
   // LOG IN FUNCTION
   const login = async ({ email, password }: any) => {
-
     const userData = {
-      email: email,
-      password: password,
-    };
+      email,
+      password
+    }
     // console.log(userData)
 
     try {
+      AsyncStorage.setItem('userToken', 'gaga')
 
-
-      AsyncStorage.setItem('userToken', "gaga");
-
-      setUser(user);
-      setIsLoading(false);
-
+      setUser(user)
+      setIsLoading(false)
     } catch (error) {
-      console.error('Login failed: ', error);
+      console.error('Login failed: ', error)
     }
-  };
+  }
 
   // REGISTER FUNCTION - SAVE TOKEN IN LOCAL STORAGE
   // const register = async ({ email, password }: any) => {
@@ -103,6 +98,5 @@ export const AuthProvider = ({ children }: UserContextProviderType) => {
   //   }
   // }
 
-
-  return <AuthContext.Provider value={{ user, setUser, login, isLoading, userToken, setUserToken }}>{children}</AuthContext.Provider>;
-};
+  return <AuthContext.Provider value={{ user, setUser, login, isLoading, userToken, setUserToken }}>{children}</AuthContext.Provider>
+}

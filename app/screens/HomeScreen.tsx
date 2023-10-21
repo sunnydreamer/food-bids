@@ -13,7 +13,7 @@ const productData = [
   {
     id: '2',
     name: 'Product 2',
-    image: require('../assets/products/cramberry.jpg'), 
+    image: require('../assets/products/cramberry.jpg'),
 
   },
 
@@ -42,7 +42,7 @@ const HomeScreen = () => {
       <FlatList
         data={filteredProducts}
         keyExtractor={item => item.id}
-        numColumns={2} 
+        numColumns={2}
         renderItem={({ item }) => (
           <View style={{ flex: 1, padding: 16 }}>
             <View style={{ backgroundColor: '#f0f0f0', padding: 16, borderRadius: 8 }}>
@@ -74,7 +74,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   productImage: {
-    width: 100, 
+    width: 100,
     height: 100,
     marginBottom: 8,
   },

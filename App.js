@@ -4,13 +4,20 @@ import { SafeAreaProvider } from "react-native-safe-area-context"
 import AppNav from './app/navigation/AppNavigator';
 import { AuthContext, AuthProvider } from "./app/context/AuthContext";
 
+import {
+  PassageProvider,
+  usePassage,
+  AuthState,
+} from './app/context/PassageContext.tsx';
+
 export default function App() {
   return (
-    <AuthProvider>
-      <SafeAreaProvider>
-        <AppNav/>
-      </SafeAreaProvider>
-    </AuthProvider>
+    <SafeAreaProvider>
+      <PassageProvider>
+        <AppNav />
+      </PassageProvider>
+    </SafeAreaProvider>
+
   );
 }
 

@@ -9,6 +9,7 @@ import HomeScreen from "../screens/HomeScreen";
 import MyBidsScreen from "../screens/MyBidsScreen";
 import ProfileScreen from "../screens/ProfileScreen";
 import AuctionDetailScreen from "../screens/AuctionDetailScreen";
+import SettingsScreen from "../screens/SettingsScreen";
 
 // Tab Bottom
 const Tabs = createBottomTabNavigator();
@@ -32,6 +33,12 @@ export function TabsGroup() {
                             ? "person"
                             : "person-outline";
                     } 
+
+                    if (route.name === "Settings") {
+                        iconName = focused
+                            ? "settings"
+                            : "settings-outline";
+                    } 
                     
                     return <Ionicons name={iconName} size={size} color={color} />;
                 },
@@ -40,10 +47,10 @@ export function TabsGroup() {
             })}
         >
 
-            <Tabs.Screen name="Home" component={HomeScreen}
-            />
+            <Tabs.Screen name="Home" component={HomeScreen}/>
             <Tabs.Screen name="My Bids" component={MyBidsScreen} />
             <Tabs.Screen name="Profile" component={ProfileScreen} />
+            <Tabs.Screen name="Settings" component={SettingsScreen} />
         </Tabs.Navigator>
     );
 }

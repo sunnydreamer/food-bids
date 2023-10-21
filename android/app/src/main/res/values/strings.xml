@@ -2,4 +2,10 @@
   <string name="app_name">foodbids</string>
   <string name="expo_splash_screen_resize_mode" translatable="false">contain</string>
   <string name="expo_splash_screen_status_bar_translucent" translatable="false">false</string>
+   <string name="passage_auth_origin">LS0tLS1CRUdJTiBSU0EgUFVCTElDIEtFWS0tLS0tCk1JSUJDZ0tDQVFFQXdtWWwrZktGVDRWdUw2akhEUXVrT3E3RXZWWjhUdFdjbWFsV0FlRTg3NGJLZGtaUDc2elcKQjhLeGF5Sng2cU04M2Z4c0FRVGo2aVVyY2tITmRlUS9IOFprekN6T09nYjl5WFN1OGxucTNKeG1lSlhlR1JrSApLRU53WEdZc04wK3grVzRmUzJRRUFzbGxCNjJvNE14NkpUaE1VaGpkM01kTW9ad1crbktHMjZ6Q24zK2Z0WU9vCkVWVnZWaHhkSDBrVThNd1FzQlpQWUdEMGh0R2N3NXI4WFFFSmx2WkUwckkvazhRZTRnTm1UUzZmaithbGNtT1MKK3E2VkFwSW1XbEV5a3l0Vlk1MnUyNm5PdWQ0U2h2NCtwY2FCL0h5TzI1VmRvQi9WZWppTE1McXlKSEw4WThtNgpBSVZCd3ArMUNIMmVrQnBDdXM4VDJrRzFteUhhUnN2d3p3SURBUUFCCi0tLS0tRU5EIFJTQSBQVUJMSUMgS0VZLS0tLS0K</string>
+    <string name="asset_statements">
+      [{
+        \"include\": \"https://@string/passage_auth_origin/.well-known/assetlinks.json\"
+      }]
+    </string>
 </resources>

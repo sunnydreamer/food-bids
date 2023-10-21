@@ -1,30 +1,30 @@
 import React from 'react';
 import { Pressable, Text, TextInput, View, Image,StyleSheet } from 'react-native';
 
-import { usePassage } from '../context/PassageContext';
-
 import Colors from '../constants/Colors';
+import { usePassage, AuthState } from '../context/PassageContext';
 
-const LoginScreen = () => {
-    const { login, register } = usePassage();
 
-    const [showLogin, setShowLogin] = React.useState(false);
-    const [validEmail, setValidEmail] = React.useState(false);
-    const [emailInput, setEmailInput] = React.useState('');
+const OneTimePasscodeScreen = () => {
+    const { activateOTP, resendOTP, authState, userIdentifer } = usePassage();
+
+    const [otpInput, setOtpInput] = React.useState('');
+    const [isOtpValid, setIsOtpValid] = React.useState(false);
+
+    const isNewUser = authState === AuthState.AwaitingRegisterVerificationOTP;
 
     const onChangeInput = (input: string) => {
-        const emailRegex = /^[a-zA-Z0-9._+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-        const inputIsValidEmail = emailRegex.test(input);
-        setValidEmail(inputIsValidEmail);
-        setEmailInput(input);
+        const inputIsValidOTP = input.length > 5;
+        setIsOtpValid(inputIsValidOTP);
+        setOtpInput(input);
     };
 
     const onPressContinue = async () => {
-        if (showLogin) {
-            await login(emailInput);
-        } else {
-            await register(emailInput);
-        }
+        await activateOTP(otpInput);
+    };
+
+    const onPressResend = async () => {
+        await resendOTP();
     };
     return (
         <View style={styles.container}>
@@ -32,41 +32,39 @@ const LoginScreen = () => {
                 <Image source={require('../assets/logo.png')} style={styles.logo} />
                 <Text style={styles.brand}>FOOD BIDS</Text>
             </View>
-            <Text style={styles.title}>{showLogin ? 'Login' : 'Register'}</Text>
+            <Text style={styles.title}>Enter code</Text>
+            <Text style={styles.body}>
+                {`A one-time code has been sent to\n${userIdentifer}\nEnter the code here to ${isNewUser ? 'register' : 'login'
+                    }.`}
+            </Text>
             <TextInput
                 autoCapitalize="none"
-                autoComplete="email"
+                autoComplete="one-time-code"
                 autoCorrect={false}
-                keyboardType="email-address"
+                keyboardType="number-pad"
                 onChangeText={onChangeInput}
-                onFocus={() => showLogin && onPressContinue()}
-                placeholder="example@email.com"
+                placeholder="Your code"
                 returnKeyType="done"
                 style={styles.input}
-                textContentType="emailAddress"
+                textContentType="oneTimeCode"
                 placeholderTextColor="lightgray"
             />
             <Pressable
-                disabled={!validEmail}
+                disabled={!isOtpValid}
                 onPress={onPressContinue}
-                style={[styles.primaryButton, { opacity: validEmail ? 1.0 : 0.3 }]}>
+                style={[styles.primaryButton, { opacity: isOtpValid ? 1.0 : 0.3 }]}>
                 <Text style={styles.primaryButtonText}>Continue</Text>
             </Pressable>
-            <Pressable
-                onPress={() => setShowLogin(!showLogin)}
-                style={styles.secondaryButton}>
-                <Text style={styles.secondaryButtonText}>
-                    {showLogin
-                        ? "Don't have an account? Register"
-                        : 'Already have an account? Login'}
-                </Text>
+            <Pressable onPress={onPressResend} style={styles.secondaryButton}>
+                <Text style={styles.secondaryButtonText}>Resend code</Text>
             </Pressable>
         </View>
     )
 }
-export default LoginScreen
+export default OneTimePasscodeScreen
 
 const styles = StyleSheet.create({
+
     brand: {
         color: 'white',
         fontSize: 60,
@@ -92,6 +90,20 @@ const styles = StyleSheet.create({
         fontSize: 18,
         fontWeight: '800',
         marginVertical: 18,
+        textAlign: 'center',
+    },
+    subtitle: {
+        color: 'black',
+        fontSize: 16,
+        fontWeight: '500',
+        marginVertical: 12,
+        textAlign: 'center',
+    },
+    body: {
+        color: 'white',
+        fontSize: 14,
+        marginTop: 10,
+        marginBottom: 30,
         textAlign: 'center',
     },
     input: {

@@ -1,31 +1,37 @@
-import { View, Text, ActivityIndicator } from 'react-native'
-
-import { NavigationContainer } from "@react-navigation/native";
-
-import { TabsGroup } from "../navigation/MainNavigator";
+import React from 'react';
+import { NavigationContainer } from '@react-navigation/native';
 import { useContext } from 'react';
-import { AuthContext } from '../context/AuthContext';
+import { AuthState, usePassage } from '../context/PassageContext';
 import LoginScreen from '../screens/LoginScreen';
+import MagicLinkScreen from '../screens/MagicLinkScreen';
+import OneTimePasscodeScreen from '../screens/OneTimePasscodeScreen';
+import { TabsGroup } from '../navigation/MainNavigator';
 
+const Screen: React.FC = () => {
+    const { authState } = usePassage();
 
-const AppNav = () => {
-
-    const { isLoading, userToken } = useContext(AuthContext)
-
-    if (isLoading) {
-
-        return (
-            <View style={{ flex: 1, justifyContent: "center", alignItems: 'center' }}>
-                <ActivityIndicator size="large" />
-            </View>
-        )
+    switch (authState) {
+        case AuthState.Unauthenticated:
+            return <LoginScreen />;
+        case AuthState.AwaitingRegisterVerificationMagicLink:
+        case AuthState.AwaitingLoginVerificationMagicLink:
+            return <MagicLinkScreen />;
+        case AuthState.AwaitingRegisterVerificationOTP:
+        case AuthState.AwaitingLoginVerificationOTP:
+            return <OneTimePasscodeScreen />;
+        case AuthState.Authenticated:
+            return <TabsGroup />;
+        default:
+            return <></>;
     }
+};
 
-
+const AppNav: React.FC = () => {
     return (
         <NavigationContainer>
-            {userToken !== null ? <TabsGroup /> : <LoginScreen />}
+            <Screen />
         </NavigationContainer>
-    )
-}
-export default AppNav
+    );
+};
+
+export default AppNav;
