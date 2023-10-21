@@ -30,7 +30,6 @@ except Exception as e:
 
 product_collection = mongo.db.products
 
-
 # Routes
 @app.route('/')
 def hello_world():
