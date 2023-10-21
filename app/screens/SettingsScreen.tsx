@@ -37,8 +37,8 @@ const SettingsScreen = () => {
                 <TouchableOpacity style={styles.button}>
                     <Text style={styles.buttonText}>Edit Profile</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.specialButton} onPress={signOut}>
-                    <Text style={styles.specialButtonText}>Logout</Text>
+                <TouchableOpacity style={styles.logoutButton} onPress={signOut}>
+                    <Text style={styles.logoutButtonText}>Log Out</Text>
                 </TouchableOpacity>
             
             </View>
@@ -78,15 +78,15 @@ const styles = StyleSheet.create({
         fontWeight: "bold",
         textAlign: "left",
     },
-    specialButton: {
+    logoutButton: {
         alignItems: 'center',
-        backgroundColor: '#DB4437',
-        borderRadius: 8,
+        backgroundColor: '#FF4949',
+        borderRadius: 24,
         height: 44,
         justifyContent: 'center',
         paddingHorizontal: 12,
     },
-    specialButtonText: {
+    logoutButtonText: {
         color: 'white',
         fontSize: 16,
         fontWeight: 'bold',
