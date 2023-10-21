@@ -1,29 +1,41 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import { View, Text, TextInput, FlatList, Image, TouchableOpacity, StyleSheet } from 'react-native';
 import { Ionicons } from "@expo/vector-icons";
 
-
-const productData = [
-  {
-    id: '1',
-    name: 'Product 1',
-    image: require('../assets/products/apple.jpg'),
-
-  },
-  {
-    id: '2',
-    name: 'Product 2',
-    image: require('../assets/products/cramberry.jpg'),
-
-  },
-
-];
+import { getAllProducts } from '../service/productService';
 
 const HomeScreen = () => {
   const [searchQuery, setSearchQuery] = useState('');
-  const filteredProducts = productData.filter(product =>
-    product.name.toLowerCase().includes(searchQuery.toLowerCase())
+  const [products, setProducts] = useState([]);
+  const [filteredProducts, setFilteredProducts] = useState([]);
+
+  const Item = ({ item }: any) => (
+    <View style={{backgroundColor:"pink" ,flex:1, padding:5, margin:2,flexDirection:"column"}}>
+      <Text >product_name:{item.product_name}</Text>
+      <View style={{flexDirection:"row"}}>
+        <Text >product_name:{item.end_price}</Text>
+        <Text >Buy Button</Text>
+      </View> 
+    </View>
   );
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const allProducts = await getAllProducts();
+        setProducts(allProducts);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    fetchData();
+  }, []);
+
+  useEffect(() => {
+    console.log("products are");
+    console.log(products);
+  }, [products]);
+
 
   return (
     <View>
@@ -39,23 +51,13 @@ const HomeScreen = () => {
       </View>
 
       {/* Product listings */}
-      <FlatList
-        data={filteredProducts}
-        keyExtractor={item => item.id}
-        numColumns={2}
-        renderItem={({ item }) => (
-          <View style={{ flex: 1, padding: 16 }}>
-            <View style={{ backgroundColor: '#f0f0f0', padding: 16, borderRadius: 8 }}>
-              <Image source={item.image} style={styles.productImage} />
-              <Text>{item.name}</Text>
-              <TouchableOpacity>
-                <Text style={{ color: 'blue' }}>Add to Cart</Text>
-              </TouchableOpacity>
-            </View>
-          </View>
-        )}
-      />
-    </View>
+        <FlatList
+          data={products}
+          numColumns={2}
+          renderItem={({ item }) => <Item item={item} />}
+          keyExtractor={item => item._id}
+        />
+      </View>
   );
 };
 

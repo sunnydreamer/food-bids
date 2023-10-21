@@ -64,6 +64,12 @@ export function PassageProvider({ children }: { children: React.ReactNode }) {
     }
   }, [currentUser])
 
+  useEffect(()=>{
+    console.log("current user is")
+    console.log(currentUser)
+
+  },[currentUser])
+
   const onAppStart = async () => {
     await checkAndRefreshToken()
     await checkForAuthenticatedUser()
