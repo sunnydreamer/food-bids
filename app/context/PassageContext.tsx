@@ -20,6 +20,12 @@ interface PassageContextType {
   resendMagicLink: () => Promise<void>
   addPasskey: () => Promise<void>
   signOut: () => void
+  userInfo: {
+    email: string;
+    profile_picture: string;
+    username: string;
+    user_id:string
+  };
 }
 
 export enum AuthState {
@@ -50,6 +56,13 @@ export function PassageProvider({ children }: { children: React.ReactNode }) {
   )
   const [authFallbackId, setAuthFallbackId] = useState<string | null>(null)
   const [userIdentifer, setUserIdentifier] = useState<string | null>(null)
+  // dummy data
+  const [userInfo, setUserInfo] = useState({
+    user_id:"5521",
+    email: "sunnylee9516@gmail.com",
+    profile_picture: "https://static.vecteezy.com/system/resources/previews/027/235/496/non_2x/cute-country-girl-clipart-illustration-ai-generative-png.png",
+    username: "Sunny Li",
+  });
 
   useEffect(() => {
     onAppStart()
@@ -135,7 +148,29 @@ export function PassageProvider({ children }: { children: React.ReactNode }) {
     try {
       await passage.registerWithPasskey(identifier)
       const user = await passage.getCurrentUser()
-      setCurrentUser(user)
+
+
+      // TODO: Modify this part, make it functional
+      const response = await fetch('http://127.0.0.1:5000/create_user', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email: user.email,
+          profile_picture: "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_640.png",
+          username: "User",
+        }),
+      });
+
+      if (response.ok) {
+        console.log('User data stored on the backend.');
+        setCurrentUser(user)
+      } else {
+        console.error('Failed to store user data on the backend.');
+      }
+
+  
     } catch (error) {
       if (
         error instanceof PassageError &&
@@ -262,7 +297,8 @@ export function PassageProvider({ children }: { children: React.ReactNode }) {
     resendOTP,
     checkMagicLink,
     resendMagicLink,
-    addPasskey
+    addPasskey,
+    userInfo
   }
 
   return (

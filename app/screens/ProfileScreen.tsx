@@ -8,10 +8,17 @@ import {
   Image,
 } from "react-native";
 import Colors from "../constants/Colors";
-// import { AuthContext } from "../../context/AuthContext";
+import { usePassage } from '../context/PassageContext';
 
 
 const ProfileScreen = () => {
+  const { userInfo } = usePassage();
+
+  useEffect(()=>{
+    console.log("userInfo is")
+    console.log(userInfo)
+  },[])
+
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <View style={{
@@ -19,10 +26,10 @@ const ProfileScreen = () => {
         alignItems: "center",
       }}>
         <Image
-          source={require("../assets/profile.jpg")}
+          source={{ uri: userInfo.profile_picture }}
           style={styles.profilePicture}
         />
-        <Text style={{ alignSelf: "center", fontSize: 18, fontWeight: "bold", margin:15 }}>Olivia Wilson</Text>
+        <Text style={{ alignSelf: "center", fontSize: 18, fontWeight: "bold", margin: 15 }}>{userInfo.username}</Text>
       </View>
 
       <View style={styles.section}>
@@ -40,34 +47,6 @@ const ProfileScreen = () => {
             </View>
           </View>
           
-          <TouchableOpacity style={styles.confirmButton}>
-            <Text style={styles.confirmButtonText}>CONFIRM</Text>
-          </TouchableOpacity>
-        </View>
-
-        <View style={styles.orderContainer}>
-          <View style={{ flexDirection: "row", alignItems: "center" }}>
-            <Image source={require('../assets/products/apple.jpg')} style={styles.productImage} />
-            <View>
-              <Text style={{ fontSize: 16, fontWeight: "bold" }}>Apple</Text>
-              <Text>Sunny Farm | 100kg</Text>
-            </View>
-          </View>
-
-          <TouchableOpacity style={styles.confirmButton}>
-            <Text style={styles.confirmButtonText}>CONFIRM</Text>
-          </TouchableOpacity>
-        </View>
-
-        <View style={styles.orderContainer}>
-          <View style={{ flexDirection: "row", alignItems: "center" }}>
-            <Image source={require('../assets/products/apple.jpg')} style={styles.productImage} />
-            <View>
-              <Text style={{ fontSize: 16, fontWeight: "bold" }}>Apple</Text>
-              <Text>Sunny Farm | 100kg</Text>
-            </View>
-          </View>
-
           <TouchableOpacity style={styles.confirmButton}>
             <Text style={styles.confirmButtonText}>CONFIRM</Text>
           </TouchableOpacity>
@@ -117,7 +96,6 @@ const styles = StyleSheet.create({
     marginTop: 8,
   },
   section: {
-    // backgroundColor:"pink"
     padding: 10,
   },
   sectionTitle: {

@@ -11,8 +11,28 @@ products = [
         "quantity": 50,
         "unit": "count",
         "start_price": 69,
-        "highest_bid":0,
-        "bids_history":[]
+        "highest_bid":95,
+        "bids_history":[
+       {
+        "user_id": 3,
+        "user_name": "Daisy",
+        "user_image": "https://images.pexels.com/photos/3763188/pexels-photo-3763188.jpeg?cs=srgb&dl=pexels-andrea-piacquadio-3763188.jpg&fm=jpg",
+        "price": 95,
+        "timestamp": "2023-10-22T15:18:00",
+      },
+      {
+        "user_id": 2,
+        "user_name": "Candy",
+        "user_image": "https://sb.kaleidousercontent.com/67418/1920x1282/9d56e09251/christina-wocintechchat-com-50tkcap8m3a-unsplash.jpg",
+        "price": 80,
+        "timestamp": "2023-10-22T15:15:00",
+      },{
+        "user_id": 1,
+        "user_name": "John Doe",
+        "user_image": "https://sb.kaleidousercontent.com/67418/1672x1018/6463a5af0d/screenshot-2022-05-24-at-15-22-28.png",
+        "price": 75,
+        "timestamp": "2023-10-22T14:30:00",
+      },]
     },
     {
         "product_name": "Roma Tomatoes, 25 lbs",

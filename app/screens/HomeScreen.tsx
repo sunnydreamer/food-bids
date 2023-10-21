@@ -5,6 +5,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { getAllProducts } from '../service/productService';
 import { ScrollView } from 'react-native-gesture-handler';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import Colors from '../constants/Colors';
 
 const HomeScreen = ({navigation}) => {
   const [searchQuery, setSearchQuery] = useState('');
@@ -33,7 +34,7 @@ const HomeScreen = ({navigation}) => {
 
       <View style={styles.priceAndButton}>
         <Text style={{ fontWeight: "bold", fontSize: 20 }}>${item.highest_bid !== 0 ? item.highest_bid : item.start_price}</Text>
-        <TouchableOpacity onPress={() => handleBidNowPress(item)} style={{ backgroundColor: "#FF4949", padding: 8, borderRadius: 15 }}>
+        <TouchableOpacity onPress={() => handleBidNowPress(item)} style={{ backgroundColor: Colors.mainAppColor, padding: 8, borderRadius: 15 }}>
           <Text style={{ color: "white", fontSize: 12, fontWeight: "bold" }}>BID NOW</Text>
         </TouchableOpacity>
       </View>
@@ -52,12 +53,7 @@ const HomeScreen = ({navigation}) => {
     };
     fetchData();
   }, []);
-
-  useEffect(() => {
-    console.log("products are");
-    console.log(products);
-  }, [products]);
-
+  
 
   return (
     <SafeAreaView style={{flex:1, backgroundColor:"white", paddingVertical:20}}>
