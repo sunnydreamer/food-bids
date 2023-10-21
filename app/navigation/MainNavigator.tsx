@@ -13,6 +13,7 @@ import SettingsScreen from "../screens/SettingsScreen";
 
 // Tab Bottom
 const Tabs = createBottomTabNavigator();
+const Stack = createNativeStackNavigator();
 
 export function TabsGroup() {
     return (
@@ -47,10 +48,19 @@ export function TabsGroup() {
             })}
         >
 
-            <Tabs.Screen name="Home" component={HomeScreen}/>
+            <Tabs.Screen name="Home" component={HomeStack} options={{ headerShown: false }} />
             <Tabs.Screen name="My Bids" component={MyBidsScreen} />
             <Tabs.Screen name="Profile" component={ProfileScreen} />
             <Tabs.Screen name="Settings" component={SettingsScreen} />
         </Tabs.Navigator>
+    );
+}
+
+function HomeStack() {
+    return (
+        <Stack.Navigator>
+            <Stack.Screen name="HomePage" component={HomeScreen} options={{ headerShown: false }} />
+            <Stack.Screen name="AuctionDetail" component={AuctionDetailScreen} options={{title: 'Auction Detail'}} />
+        </Stack.Navigator>
     );
 }

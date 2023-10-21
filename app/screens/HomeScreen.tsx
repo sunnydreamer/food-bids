@@ -3,21 +3,43 @@ import { View, Text, TextInput, FlatList, Image, TouchableOpacity, StyleSheet } 
 import { Ionicons } from "@expo/vector-icons";
 
 import { getAllProducts } from '../service/productService';
+import { ScrollView } from 'react-native-gesture-handler';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
-const HomeScreen = () => {
+const HomeScreen = ({navigation}) => {
   const [searchQuery, setSearchQuery] = useState('');
   const [products, setProducts] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState([]);
 
-  const Item = ({ item }: any) => (
-    <View style={{backgroundColor:"pink" ,flex:1, padding:5, margin:2,flexDirection:"column"}}>
-      <Text >product_name:{item.product_name}</Text>
-      <View style={{flexDirection:"row"}}>
-        <Text >product_name:{item.end_price}</Text>
-        <Text >Buy Button</Text>
-      </View> 
-    </View>
-  );
+  
+
+  const handleBidNowPress = (item:any) => {
+    navigation.navigate('AuctionDetail', {item:item}); 
+  };
+
+  const Item = ({ item }: any) => {
+    const productImageSource = item.product_picture
+      ? { uri: item.product_picture }
+      : require('../assets/products/default_product.jpg');
+
+    return (<View style={styles.productItem}>
+      <TouchableOpacity onPress={() => handleBidNowPress(item)} style={{
+        width: "95%", height: 200, overflow: "hidden", marginBottom: 15}}>
+        <Image source={productImageSource} style={styles.productImage} />
+      </TouchableOpacity>
+      <View style={{ height: 40, overflow: "hidden" }}>
+        <Text style={{ textAlign: "left", fontSize: 15, fontWeight: "bold", color: "#313737" }}>{item.product_name}</Text>
+      </View>
+
+      <View style={styles.priceAndButton}>
+        <Text style={{ fontWeight: "bold", fontSize: 20 }}>${item.highest_bid !== 0 ? item.highest_bid : item.start_price}</Text>
+        <TouchableOpacity onPress={() => handleBidNowPress(item)} style={{ backgroundColor: "#FF4949", padding: 8, borderRadius: 15 }}>
+          <Text style={{ color: "white", fontSize: 12, fontWeight: "bold" }}>BID NOW</Text>
+        </TouchableOpacity>
+      </View>
+    </View>)
+
+  }
 
   useEffect(() => {
     const fetchData = async () => {
@@ -38,7 +60,7 @@ const HomeScreen = () => {
 
 
   return (
-    <View>
+    <SafeAreaView style={{flex:1, backgroundColor:"white", paddingVertical:20}}>
       {/* Search bar */}
       <View style={styles.searchBarContainer}>
         <TextInput
@@ -57,7 +79,7 @@ const HomeScreen = () => {
           renderItem={({ item }) => <Item item={item} />}
           keyExtractor={item => item._id}
         />
-      </View>
+    </SafeAreaView>
   );
 };
 
@@ -76,9 +98,24 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   productImage: {
-    width: 100,
-    height: 100,
-    marginBottom: 8,
+    width: "100%",
+    height: 200,
+    borderRadius:20
+  },
+  productItem: {
+    padding: 10,
+    flexDirection: "column",
+    flexBasis: "50%", 
+    alignItems:"center",
+    height:310
+
+  },
+  priceAndButton: {
+    flexDirection: "row",
+    justifyContent:"space-between",
+    alignItems:"center",
+    width:"90%",
+    marginVertical:5
   },
 });
 
