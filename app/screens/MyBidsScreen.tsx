@@ -62,9 +62,48 @@ const MyBidsScreen = () => {
         </View>
       )}
       {selectedTab === 'Closed' && (
-        <View>
-          <Text>Closed Bids Content</Text>
-          {/* Add your closed bids content here */}
+        <View style={{ paddingHorizontal: 20 }}>
+          <View style={styles.orderContainer}>
+            <View style={{ flexDirection: "row", alignItems: "center" }}>
+              <Image source={require('../assets/products/apple.jpg')} style={styles.productImage} />
+              <View>
+                <Text style={{ fontSize: 16, fontWeight: "bold" }}>Apple</Text>
+                <Text>Sunny Farm | 100kg</Text>
+              </View>
+            </View>
+            <Text style={styles.successText}>Success</Text>
+          </View>
+          <View style={styles.orderContainer}>
+            <View style={{ flexDirection: "row", alignItems: "center" }}>
+              <Image source={require('../assets/products/oranges.jpg')} style={styles.productImage} />
+              <View>
+                <Text style={{ fontSize: 16, fontWeight: "bold" }}>Orange</Text>
+                <Text>Sunny Farm | 100kg</Text>
+              </View>
+            </View>
+            <Text style={styles.successText}>Success</Text>
+          </View>
+          <View style={styles.orderContainer}>
+            <View style={{ flexDirection: "row", alignItems: "center" }}>
+              <Image source={require('../assets/products/potato.jpg')} style={styles.productImage} />
+              <View>
+                <Text style={{ fontSize: 16, fontWeight: "bold" }}>Potato</Text>
+                <Text>Sunny Farm | 100kg</Text>
+              </View>
+            </View>
+            <Text style={styles.failText}>Credit Returned</Text>
+   
+          </View>
+          <View style={styles.orderContainer}>
+            <View style={{ flexDirection: "row", alignItems: "center" }}>
+              <Image source={require('../assets/products/cramberry.jpg')} style={styles.productImage} />
+              <View>
+                <Text style={{ fontSize: 16, fontWeight: "bold" }}>Cranberry</Text>
+                <Text>Sunny Farm | 100kg</Text>
+              </View>
+            </View>
+            <Text style={styles.successText}>Success</Text>
+          </View>
         </View>
       )}
     </View>
@@ -125,12 +164,18 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     alignItems: 'center',
     justifyContent: 'center',
-    
   },
   confirmButtonText: {
     color: 'white',
     fontSize: 15,
   },
+  failText:{
+    color:"red"
+  },
+  successText:{
+    color:"green"
+  }
+  
 });
 
 export default MyBidsScreen;

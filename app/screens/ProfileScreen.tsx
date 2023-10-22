@@ -40,6 +40,10 @@ const ProfileScreen = () => {
         <Text style={{ alignSelf: "center", fontSize: 18, fontWeight: "bold", margin: 15 }}>{userInfo.username}</Text>
       </View>
 
+       <Text style={{ fontSize: 16, color: "black", textAlign: "center" }}>
+          Current Credits: $565
+        </Text>
+
       <View style={styles.section}>
         <View style={{flexDirection:"row", justifyContent:"space-between", alignItems:"center",paddingVertical:15}}>
           <Text style={styles.sectionTitle}>Order Tracking</Text>
@@ -63,15 +67,16 @@ const ProfileScreen = () => {
 
       <View style={styles.section}>
         <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center", paddingVertical: 12 }}>
-          <Text style={styles.sectionTitle}>Order History</Text>
-        </View>
-      </View>
-
-      <View style={styles.section}>
-        <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center", paddingVertical: 12 }}>
           <Text style={styles.sectionTitle}>Payment Methods</Text>
         </View>
       </View>
+
+       
+
+      <View style={{width:"100%", height:250}}>
+        <Image source={require('../assets/card.png')} style={{width:"100%", height:250}} />
+      </View>
+      
       <View style={styles.section}>
         <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center", paddingVertical:12 }}>
           <Text style={styles.sectionTitle}>Help Center</Text>
