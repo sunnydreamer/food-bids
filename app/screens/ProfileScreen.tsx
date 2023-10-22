@@ -9,10 +9,15 @@ import {
 } from "react-native";
 import Colors from "../constants/Colors";
 import { usePassage } from '../context/PassageContext';
+import ImagePicker from 'react-native-image-picker';
 
 
 const ProfileScreen = () => {
   const { userInfo } = usePassage();
+
+  const handleEditProfilePicture = () => {
+    console.log("edit profile picture")
+  };
 
   useEffect(()=>{
     console.log("userInfo is")
@@ -25,10 +30,13 @@ const ProfileScreen = () => {
         flexDirection: "column",
         alignItems: "center",
       }}>
-        <Image
-          source={{ uri: userInfo.profile_picture }}
-          style={styles.profilePicture}
-        />
+        <TouchableOpacity onPress={handleEditProfilePicture}>
+          <Image
+            source={{ uri: userInfo.profile_picture }}
+            style={styles.profilePicture}
+          />
+        </TouchableOpacity>
+       
         <Text style={{ alignSelf: "center", fontSize: 18, fontWeight: "bold", margin: 15 }}>{userInfo.username}</Text>
       </View>
 

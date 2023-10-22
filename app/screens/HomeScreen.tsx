@@ -6,6 +6,7 @@ import { getAllProducts } from '../service/productService';
 import { ScrollView } from 'react-native-gesture-handler';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Colors from '../constants/Colors';
+import { useFocusEffect } from '@react-navigation/native';
 
 const HomeScreen = ({navigation}) => {
   const [searchQuery, setSearchQuery] = useState('');
@@ -42,19 +43,20 @@ const HomeScreen = ({navigation}) => {
 
   }
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const allProducts = await getAllProducts();
-        setProducts(allProducts);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-    fetchData();
-  }, []);
+  useFocusEffect(
+    React.useCallback(() => {
+      const fetchData = async () => {
+        try {
+          const allProducts = await getAllProducts();
+          setProducts(allProducts);
+        } catch (error) {
+          console.error(error);
+        }
+      };
+      fetchData();
+    }, []),
+  );
   
-
   return (
     <SafeAreaView style={{flex:1, backgroundColor:"white", paddingVertical:20}}>
       {/* Search bar */}

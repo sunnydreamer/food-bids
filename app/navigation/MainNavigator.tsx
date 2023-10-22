@@ -26,7 +26,7 @@ export function TabsGroup() {
                     } 
                     
                     if (route.name === "My Bids") {
-                        iconName = focused ? "hammer-outline" : "hammer" ;
+                        iconName = focused ? "hammer" : "hammer-outline" ;
                     } 
                     
                     if (route.name === "Profile") {

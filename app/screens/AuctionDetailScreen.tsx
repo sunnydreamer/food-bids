@@ -7,6 +7,8 @@ import { SafeAreaView } from "react-native-safe-area-context";
 const AuctionDetailScreen = ({ route }) => {
 
   const { userInfo } = usePassage();
+  // console.log("userInfo is")
+  // console.log(userInfo)
   const { item } = route.params;
 
   const [itemInfo,setItemInfo] = useState(item)
@@ -73,10 +75,10 @@ const AuctionDetailScreen = ({ route }) => {
     toggleModal(); 
   };
 
-  useEffect(() => {
-    console.log("=============================ItemInfo================================")
-    console.log(itemInfo)
-  }, [itemInfo])
+  // useEffect(() => {
+  //   console.log("=============================ItemInfo================================")
+  //   console.log(itemInfo)
+  // }, [itemInfo])
 
   return (
     <View>
@@ -123,7 +125,7 @@ const AuctionDetailScreen = ({ route }) => {
         {/* Highest Bids Section */}
         <View style={styles.highestBidsSection}>
           <Text style={styles.highestBidsHeader}>Highest Bids</Text>
-            {itemInfo.bids_history.length === 0 ? (
+            {!itemInfo || !itemInfo.bids_history || itemInfo.bids_history.length === 0 ? (
             <Text style={styles.noBidsText}>Be the first one to bid!</Text>
           ) : (
                 itemInfo.bids_history.map((bid, index) => (

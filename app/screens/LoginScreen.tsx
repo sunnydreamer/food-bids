@@ -6,7 +6,8 @@ import { usePassage } from '../context/PassageContext';
 import Colors from '../constants/Colors';
 
 const LoginScreen = () => {
-    const { login, register } = usePassage();
+    const { userInfo, setUserInfo, login, register } = usePassage();
+
 
     const [showLogin, setShowLogin] = React.useState(false);
     const [validEmail, setValidEmail] = React.useState(false);
@@ -19,13 +20,80 @@ const LoginScreen = () => {
         setEmailInput(input);
     };
 
+    async function createUserOnBackend(emailInput) {
+        const response = await fetch('http://127.0.0.1:5000/create_user', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                email: emailInput,
+                profile_picture: "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_640.png",
+                username: "New User",
+            }),
+        });
+
+        if (response.ok) {
+            const responseData = await response.json(); // Parse the entire response
+            const user_data = responseData.user_data;
+            console.log("=================userData is=====================")
+  
+            console.log('User data stored on the backend.');
+
+            setUserInfo({
+                email: user_data.email,
+                profile_picture: user_data.profile_picture,
+                username: user_data.username,
+                user_id: user_data._id,
+            });
+        } else {
+            console.error('Failed to store user data on the backend.');
+        }
+    }
+
+    async function getUserDataByEmail(emailInput) {
+        try {
+            const response = await fetch('http://127.0.0.1:5000/get_user_info?email=' + emailInput, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+
+            if (response.ok) {
+                const userData = await response.json();
+                console.log('User data retrieved from the backend:', userData);
+
+                if (userData.user_data) {
+                    const user_data = userData.user_data;
+                    setUserInfo({
+                        email: user_data.email,
+                        profile_picture: user_data.profile_picture,
+                        username: user_data.username,
+                        user_id: user_data._id,
+                    });
+                    console.log('User data set in UserInfo:', user_data);
+                } else {
+                    console.error('User data not found in the response.');
+                }
+            } 
+        } catch (error) {
+            console.error('Error while fetching user data:', error);
+        }
+    }
+
+    
+
     const onPressContinue = async () => {
         if (showLogin) {
             await login(emailInput);
+            await getUserDataByEmail(emailInput)
         } else {
             await register(emailInput);
+            await createUserOnBackend(emailInput);
         }
     };
+
     return (
         <View style={styles.container}>
             <View style={styles.header}>
