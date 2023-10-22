@@ -1,9 +1,12 @@
+<p align="center">
+  <img src="app/assets/logo.png" alt="FoodBids Logo" width="200" />
+</p>
+
 # FoodBids - Farm Product Auction App
 
 FoodBids is a farm product auction app designed to address critical issues: reducing food waste, supporting farmers, and enhancing people's lives. 
 
 ## Technology Used
-
 
 - **React Native**
 
